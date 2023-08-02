@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "panzer",
+  "version": "${version}",
+  "name": "Panzer",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/84848/Panzer"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "panzer.ClientInit"
+    ]
+  },
+  "mixins": [
+    "panzer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
