@@ -14,7 +14,7 @@ public class Module {
     public final MinecraftClient mc = MinecraftClient.getInstance();
     private Category category;
     private String name;
-    private int key;
+    private int key = -1;
     public String info;
     private boolean toggle;
     public float arrayListX, arrayListY;
