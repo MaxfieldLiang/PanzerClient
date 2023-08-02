@@ -12,7 +12,7 @@ public class AutoSprint extends Module {
 
     @Override
     public void onLivingUpdate(EventLivingUpdate event) {
-        if (mc.player.getMovementSpeed() > 0) {
+        if (mc.player.input.movementForward > 0) {
             mc.player.setSprinting(true);
         } else {
             mc.player.setSprinting(false);

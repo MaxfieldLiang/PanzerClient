@@ -1,11 +1,11 @@
 package panzer.injection.mixins;
 
 import com.mojang.authlib.GameProfile;
+import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import panzer.Client;
 import panzer.event.Event;
-import panzer.event.events.EventLivingUpdate;
-import panzer.event.events.EventMotionUpdate;
-import panzer.event.events.EventUpdate;
+import panzer.event.events.*;
 import panzer.injection.interfaces.IClientPlayerEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -19,6 +19,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import panzer.module.combat.AntiKnowback;
+import panzer.module.movement.AntiSlow;
+import panzer.module.movement.Flight;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implements IClientPlayerEntity {
@@ -34,6 +37,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implemen
     @Shadow
     @Final
     protected MinecraftClient client;
+
+    private boolean hideNextItemUse;
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
@@ -67,6 +72,47 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implemen
         EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(getYaw(), getPitch());
         eventMotionUpdate.setState(Event.State.POST);
         Client.eventManager.onMotionUpdate(eventMotionUpdate);
+    }
+
+    @Inject(at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z",
+            ordinal = 0), method = "tickMovement()V")
+    private void onTickMovementItemUse(CallbackInfo ci) {
+        if (Client.moduleManager.getModule(AntiSlow.class).isToggle()) {
+            hideNextItemUse = true;
+        }
+    }
+
+    @Inject(at = @At("HEAD"), method = "isUsingItem()Z", cancellable = true)
+    private void onIsUsingItem(CallbackInfoReturnable<Boolean> cir) {
+        if (!hideNextItemUse)
+            return;
+
+        cir.setReturnValue(false);
+        hideNextItemUse = false;
+    }
+
+    @Override
+    protected float getOffGroundSpeed() {
+        EventOffGroundSpeed eventOffGroundSpeed = new EventOffGroundSpeed(super.getOffGroundSpeed());
+        Client.eventManager.eventOffGroundSpeed(eventOffGroundSpeed);
+        return eventOffGroundSpeed.getSpeed();
+    }
+
+    @Override
+    public void setVelocityClient(double x, double y, double z) {
+        EventKnowBack eventKnowBack = new EventKnowBack(x, y, z);
+        Client.eventManager.onKnowBackEvent(eventKnowBack);
+        super.setVelocityClient(eventKnowBack.getX(), eventKnowBack.getY(), eventKnowBack.getZ());
+    }
+
+
+    @Inject(at = @At(value = "FIELD",
+            target = "Lnet/minecraft/client/network/ClientPlayerEntity;ticksToNextAutojump:I",
+            opcode = Opcodes.GETFIELD,
+            ordinal = 0), method = "tickMovement()V")
+    private void afterIsUsingItem(CallbackInfo ci) {
+        hideNextItemUse = false;
     }
 
     @Inject(at = @At(value = "INVOKE",

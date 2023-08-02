@@ -1,25 +1,30 @@
 package panzer.module.render;
 
 import panzer.event.events.EventUpdate;
+import panzer.injection.interfaces.ISimpleOption;
 import panzer.module.Module;
 
 public class FullBright extends Module {
-
-    private boolean wasGammaChanged;
-    private float nightVisionStrength;
+    private double previousValue = 0.0;
     public FullBright() {
         super("FullBright", Category.RENDER);
     }
 
     @Override
-    public void onUpdate(EventUpdate event) {
-        mc.options.getGamma().setValue(16.0);
-        super.onUpdate(event);
+    public void onEnable() {
+        this.previousValue = mc.options.getGamma().getValue();
+        @SuppressWarnings("unchecked")
+        ISimpleOption<Double> gamma =
+                (ISimpleOption<Double>)(Object)mc.options.getGamma();
+        gamma.forceSetValue(10000.0);
+        super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        mc.options.getGamma().setValue(1.0);
+        ISimpleOption<Double> gamma =
+                (ISimpleOption<Double>)(Object)mc.options.getGamma();
+        gamma.forceSetValue(previousValue);
         super.onDisable();
     }
 }

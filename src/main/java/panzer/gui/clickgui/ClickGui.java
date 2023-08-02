@@ -19,12 +19,10 @@ public class ClickGui {
     public float openAnim = 0F;
 
     public ClickGui() {
-        double width = 80;
+        double width = 90;
         double height = 15;
         double titleX = 5;
         double titleY = 5;
-
-        double titleYPlus = height + 10;
 
         for (Module.Category category : Module.Category.values()) {
             if (category != Module.Category.HIDE) {
@@ -40,7 +38,7 @@ public class ClickGui {
                         super.init();
                     }
                 });
-                titleY += titleYPlus;
+                titleX += width + 10;
             }
         }
     }
@@ -67,11 +65,11 @@ public class ClickGui {
         }
         context.getMatrices().pop();
         if (Client.clickGuiHook.isOpen()) {
-            backGroundAlpha = RenderUtil.move(backGroundAlpha, 0.8F, 0.01F, 0.001F);
-            openAnim = RenderUtil.move(openAnim, 1F, 0.01F, 0.01F);
+            backGroundAlpha = RenderUtil.move(backGroundAlpha, 0.8F, 0.03F, 0.03F);
+            openAnim = RenderUtil.move(openAnim, 1F, 0.03F, 0.03F);
         } else {
-            backGroundAlpha = RenderUtil.move(backGroundAlpha, 0F, 0.01F, 0.001F);
-            openAnim = RenderUtil.move(openAnim, 600, 0.01F, 0.01F);
+            backGroundAlpha = RenderUtil.move(backGroundAlpha, 0F, 0.03F, 0.03F);
+            openAnim = RenderUtil.move(openAnim, 600, 0.03F, 0.03F);
         }
     }
     public void keyPressed(int keyCode, int scanCode, int modifiers) {

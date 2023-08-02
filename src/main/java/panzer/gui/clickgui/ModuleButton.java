@@ -29,7 +29,7 @@ public class ModuleButton {
         this.module = module;
         this.titleButton = titleButton;
         height = 15;
-        width = 76;
+        width = 86;
 
         ArrayList<Setting> settings = Client.settingManager.getSettingByModule(module);
         if (settings != null) {

@@ -38,13 +38,6 @@ public class ClickGuiFile extends Files {
                 return;
             }
 
-
-            if (jsonObject.has("extend")) {
-                if (Boolean.parseBoolean(jsonObject.get("extend").getAsString())) {
-                    titleButton.setExtend(true);
-                }
-            }
-
             if (jsonObject.has("x")) {
                 titleButton.setX(Double.parseDouble(jsonObject.get("x").getAsString()));
             }
@@ -75,7 +68,6 @@ public class ClickGuiFile extends Files {
 
             JsonObject jsonObject = new JsonObject();
 
-            jsonObject.addProperty("extend", titleButton.isExtend());
             jsonObject.addProperty("x", titleButton.getX());
             jsonObject.addProperty("y", titleButton.getY());
 

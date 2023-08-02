@@ -4,10 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.glfw.GLFW;
 import panzer.Client;
-import panzer.event.events.EventGui;
-import panzer.event.events.EventLivingUpdate;
-import panzer.event.events.EventMotionUpdate;
-import panzer.event.events.EventUpdate;
+import panzer.event.events.*;
 import panzer.module.Module;
 
 public class EventManager {
@@ -29,6 +26,31 @@ public class EventManager {
         for (Module module : Client.moduleManager.getModules()) {
             if (module.isToggle()) {
                 module.onEventMotionUpdate(event);
+            }
+        }
+    }
+
+    public void onRender(EventRender event) {
+
+        for (Module module : Client.moduleManager.getModules()) {
+            if (module.isToggle()) {
+                module.onRender(event);
+            }
+        }
+    }
+
+    public void eventOffGroundSpeed(EventOffGroundSpeed event) {
+        for (Module module : Client.moduleManager.getModules()) {
+            if (module.isToggle()) {
+                module.onOffGroundSpeed(event);
+            }
+        }
+    }
+
+    public void onKnowBackEvent(EventKnowBack event) {
+        for (Module module : Client.moduleManager.getModules()) {
+            if (module.isToggle()) {
+                module.onKnowBack(event);
             }
         }
     }

@@ -2,10 +2,7 @@ package panzer.module;
 
 import panzer.Client;
 import panzer.event.Event;
-import panzer.event.events.EventGui;
-import panzer.event.events.EventLivingUpdate;
-import panzer.event.events.EventMotionUpdate;
-import panzer.event.events.EventUpdate;
+import panzer.event.events.*;
 import panzer.setting.SettingManager;
 import net.minecraft.client.MinecraftClient;
 
@@ -18,6 +15,7 @@ public class Module {
     public String info;
     private boolean toggle;
     public float arrayListX, arrayListY;
+
     public Module(String name, Category category) {
         this.name = name;
         this.category = category;
@@ -55,14 +53,24 @@ public class Module {
 
     public void onLivingUpdate(EventLivingUpdate event) {
     }
+
     public void onUpdate(EventUpdate event) {
     }
 
     public void onGuiRender(EventGui event) {
     }
 
+    public void onRender(EventRender event) {
+    }
+
+    public void onKnowBack(EventKnowBack event) {
+    }
+
+    public void onOffGroundSpeed(EventOffGroundSpeed event) {
+    }
+
     public enum Category {
-        COMBAT, MOVEMENT, RENDER, WORLD, SETTING, HIDE
+        COMBAT, MOVEMENT, RENDER, WORLD, MISC, SETTING, HIDE
     }
 
 

@@ -8,7 +8,13 @@
     "GameRendererMixin",
     "IngameHudMixin",
     "KeyboardMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "SimpleOptionMixin",
+    "LivingEntityRendererMixin",
+    "EntityRendererMixin",
+    "ClientConnectionMixin",
+    "BlockMixin",
+    "RenderTickCounterMixin"
   ],
   "injectors": {
     "defaultRequire": 1

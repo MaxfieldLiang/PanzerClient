@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TitleButton {
     private String name;
     private double x, y, x1, y1, width, height;
-    private boolean drag, extend;
+    private boolean drag;
 
     private final ArrayList<ModuleButton> moduleButtons = new ArrayList<>();
 
@@ -41,19 +41,17 @@ public class TitleButton {
         //centerX - textRenderer.getWidth(text) / 2
 
         RenderUtil.drawString(drawContext, name, (int) (x + width / 2) - MinecraftClient.getInstance().textRenderer.getWidth(name) / 2, (int) (y + height / 2 - 4), Color.BLACK.getRGB(), false);
-        if (isExtend() && !moduleButtons.isEmpty()) {
+        if (!moduleButtons.isEmpty()) {
             double startY = y + height;
             for (ModuleButton moduleButton : moduleButtons) {
                 moduleButton.setX(x + 2);
                 moduleButton.setY(startY);
-                moduleButton.drawScreen(drawContext, mouseX, mouseY, partialTicks);
 
                 animPos = RenderUtil.move(animPos, (float) (moduleButton.getHeight()), 0.03F, 0.03F);
 
                 startY += animPos;
+                moduleButton.drawScreen(drawContext, mouseX, mouseY, partialTicks);
             }
-        } else {
-            animPos = -1;
         }
     }
 
@@ -62,9 +60,7 @@ public class TitleButton {
             x1 = this.x - mouseX;
             y1 = this.y - mouseY;
             drag = true;
-        } else if (isHovered((int) mouseX, (int) mouseY) && mouseButton == 1) {
-            this.extend = !extend;
-        } else if (isExtend()) {
+        } else {
             for (ModuleButton moduleButton : moduleButtons) {
                 moduleButton.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
             }
@@ -75,18 +71,14 @@ public class TitleButton {
         if (state == 0) {
             drag = false;
         }
-        if (isExtend()) {
-            for (ModuleButton moduleButton : moduleButtons) {
-                moduleButton.mouseReleased(mouseX, mouseY, state);
-            }
+        for (ModuleButton moduleButton : moduleButtons) {
+            moduleButton.mouseReleased(mouseX, mouseY, state);
         }
     }
 
     protected void keyTyped(char typedChar, int keyCode) {
-        if (extend) {
-            for (ModuleButton moduleButton : moduleButtons) {
-                moduleButton.keyTyped(typedChar, keyCode);
-            }
+        for (ModuleButton moduleButton : moduleButtons) {
+            moduleButton.keyTyped(typedChar, keyCode);
         }
     }
 
@@ -158,11 +150,4 @@ public class TitleButton {
         this.drag = drag;
     }
 
-    public boolean isExtend() {
-        return extend;
-    }
-
-    public void setExtend(boolean extend) {
-        this.extend = extend;
-    }
 }
