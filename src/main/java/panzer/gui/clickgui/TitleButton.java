@@ -2,11 +2,9 @@ package panzer.gui.clickgui;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import panzer.Client;
 import panzer.utils.RenderUtil;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TitleButton {
@@ -22,10 +20,10 @@ public class TitleButton {
         this.y = y;
         this.width = width;
         this.height = height;
-        setup();
+        init();
     }
 
-    public void setup() {
+    public void init() {
     }
 
     private float animPos = -1;

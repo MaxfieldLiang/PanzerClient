@@ -25,7 +25,9 @@ public class KeyBindButton extends SettingButton {
     @Override
     public void drawScreen(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
         drawContext.fill((int) x, (int) y, (int) (x + width), (int) (y + height), Color.WHITE.getRGB());
-        String text =!InputUtil.Type.KEYSYM.createFromCode(moduleButton.getModule().getKey()).getLocalizedText().getString().equalsIgnoreCase("key.keyboard.0") ? InputUtil.Type.KEYSYM.createFromCode(moduleButton.getModule().getKey()).getLocalizedText().getString() : "NONE";
+        String text =!InputUtil.Type.KEYSYM.createFromCode(moduleButton.getModule().getKey()).getLocalizedText()
+                .getString().equalsIgnoreCase("key.keyboard.0") ?
+                InputUtil.Type.KEYSYM.createFromCode(moduleButton.getModule().getKey()).getLocalizedText().getString() : "NONE";
         if (listener) {
             text = "PRESS";
         }

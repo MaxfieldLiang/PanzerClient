@@ -31,13 +31,13 @@ public class ClickGui {
                 String name = category.name().toUpperCase(Locale.ROOT);
                 this.titleButtons.add(new TitleButton(name, titleX, titleY, width, height) {
                     @Override
-                    public void setup() {
+                    public void init() {
                         for (Module module : Client.moduleManager.getModules()) {
                             if (module.getCategory() == category) {
                                 this.getModuleButtons().add(new ModuleButton(module, this));
                             }
                         }
-                        super.setup();
+                        super.init();
                     }
                 });
                 titleY += titleYPlus;
