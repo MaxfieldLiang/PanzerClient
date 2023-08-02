@@ -8,7 +8,7 @@ import panzer.module.ModuleManager;
 import panzer.setting.SettingManager;
 
 public class Client {
-    private static final String version = "1.0.0";
+    public static final String version = "1.0.0";
     public static final EventManager eventManager = new EventManager();
     public static final ModuleManager moduleManager = new ModuleManager();
     public static final SettingManager settingManager = new SettingManager();

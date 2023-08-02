@@ -39,8 +39,8 @@ public class SlideButton extends SettingButton {
         drawContext.fill((int) x, (int) y, (int) (x + width), (int) (y + height), Color.WHITE.getRGB());
 
 
-        RenderUtil.drawString(drawContext, setting.getSettingName(), (float) (x + 2), (float) (y), Color.BLACK.getRGB(), false);
-        RenderUtil.drawString(drawContext, displayval, (float) (x + width - MinecraftClient.getInstance().textRenderer.getWidth(displayval)) - 1, (float) (y), Color.BLACK.getRGB(), false);
+        RenderUtil.drawString(drawContext, setting.getSettingName(), (float) (x + 2), (float) (y + 2), Color.BLACK.getRGB(), false);
+        RenderUtil.drawString(drawContext, displayval, (float) (x + width - MinecraftClient.getInstance().textRenderer.getWidth(displayval)) - 1, (float) (y + 2), Color.BLACK.getRGB(), false);
 
 
         drawContext.fill((int) x, (int) (y + 11.5), (int) (x + width), (int) (y + 16), Color.GRAY.getRGB());
