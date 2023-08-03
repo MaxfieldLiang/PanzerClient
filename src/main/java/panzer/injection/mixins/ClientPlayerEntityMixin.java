@@ -1,27 +1,24 @@
 package panzer.injection.mixins;
 
 import com.mojang.authlib.GameProfile;
-import org.objectweb.asm.Opcodes;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import panzer.Client;
-import panzer.event.Event;
-import panzer.event.events.*;
-import panzer.injection.interfaces.IClientPlayerEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import panzer.module.combat.AntiKnowback;
-import panzer.module.movement.AntiSlow;
-import panzer.module.movement.Flight;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import panzer.Client;
+import panzer.event.Event;
+import panzer.event.events.*;
+import panzer.injection.interfaces.IClientPlayerEntity;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implements IClientPlayerEntity {
@@ -78,9 +75,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implemen
             target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z",
             ordinal = 0), method = "tickMovement()V")
     private void onTickMovementItemUse(CallbackInfo ci) {
-        if (Client.moduleManager.getModule(AntiSlow.class).isToggle()) {
-            hideNextItemUse = true;
-        }
+
     }
 
     @Inject(at = @At("HEAD"), method = "isUsingItem()Z", cancellable = true)
