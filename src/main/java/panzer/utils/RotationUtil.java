@@ -1,6 +1,7 @@
 package panzer.utils;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class RotationUtil {
@@ -15,5 +16,9 @@ public class RotationUtil {
         float pitch = (float) -Math.toDegrees(Math.atan2(differentY, hypotenuse));
         //simple math
         return new float[]{yaw, pitch};
+    }
+
+    public static Vec3d getRotationSpeed(float yaw, float speed) {
+        return new Vec3d(-MathHelper.sin(yaw) * speed, 0, MathHelper.cos(yaw) * speed);
     }
 }
